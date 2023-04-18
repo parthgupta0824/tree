@@ -1,0 +1,32 @@
+GoalKicker.com – MongoDB® Notes for Professionals 7
+Chapter 2: CRUD Operation
+Section 2.1: Create
+db.people.insert({name: 'Tom', age: 28});
+Or
+db.people.save({name: 'Tom', age: 28});
+The difference with save is that if the passed document contains an _id field, if a document already exists with that
+_id it will be updated instead of being added as new.
+Two new methods to insert documents into a collection, in MongoDB 3.2.x:
+Use insertOne to insert only one record:
+db.people.insertOne({name: 'Tom', age: 28});
+Use insertMany to insert multiple records:
+db.people.insertMany([{name: 'Tom', age: 28},{name: 'John', age: 25}, {name: 'Kathy', age: 23}])
+Note that insert is highlighted as deprecated in every official language driver since version 3.0. The full distinction
+being that the shell methods actually lagged behind the other drivers in implementing the method. The same thing
+applies for all other CRUD methods
+Section 2.2: Update
+Update the entire object:
+db.people.update({name: 'Tom'}, {age: 29, name: 'Tom'})
+// New in MongoDB 3.2
+db.people.updateOne({name: 'Tom'},{age: 29, name: 'Tom'}) //Will replace only first matching
+document.
+db.people.updateMany({name: 'Tom'},{age: 29, name: 'Tom'}) //Will replace all matching documents.
+Or just update a single field of a document. In this case age:
+db.people.update({name: 'Tom'}, {$set: {age: 29}})
+You can also update multiple documents simultaneously by adding a third parameter. This query will update all
+documents where the name equals Tom:
+db.people.update({name: 'Tom'}, {$set: {age: 29}}, {multi: true})
+// New in MongoDB 3.2
+db.people.updateOne({name: 'Tom'},{$set:{age: 30}) //Will update only first matching document.
+db.people.updateMany({name: 'Tom'},{$set:{age: 30}}) //Will update all matching documents.
+If a new field is coming for update, that field will be added to the document.
