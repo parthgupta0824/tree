@@ -31,7 +31,7 @@ public:
             return n;
         }
         else if(r1 && !r2){
-            TreeNode *n = new TreeNode(r1->val);
+            TreeNode *n = new TreeNode(r1 -> val);
             n->left = mergeTrees(r1->left,r2);
             n->right = mergeTrees(r1->right,r2);
             return n;
